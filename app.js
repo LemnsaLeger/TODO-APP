@@ -8,6 +8,16 @@ const todoCrossIcon = todoContainer.querySelector("li .icon-cross");
 const todoCheckbox = document.querySelector(".checkbox");
 const todoCheck = document.querySelector(".todo");
 
+
+const todosArray = [];
+
+function CreateTodoObject(todo, status = 'pending') {
+ this.todo = todo;
+ this.status = status;
+
+ return { todo, status }
+}
+
 // function to add todo
 function getTodo() {
     if(!inputField.value) {
@@ -15,6 +25,10 @@ function getTodo() {
     } else {
             let input;
             input = inputField.value.trim();
+            const todoObject = new CreateTodoObject(input);
+            todosArray.push(todoObject);
+
+            saveTodoToLocalStorage(todoObject);
             return input;
     }
 }
@@ -52,6 +66,11 @@ inputCheckBox.addEventListener("click", () => {
     li = todoLiItem();
     if(li) {
             todoContainer.prepend(li);
-            console.log(li);
     }
 });
+
+
+// save todos in local storage
+function saveTodoToLocalStorage() {
+    localStorage.setItem("todos", JSON.stringify(todosArray));
+}
