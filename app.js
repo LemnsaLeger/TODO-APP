@@ -33,7 +33,7 @@ function getTodo() {
     }
 }
 
-function todoLiItem() {
+function todoLiItem(todoText='') {
     let li = document.createElement("li");
     let div = document.createElement("div"); // for checkbox
     div.className = "input checkbox";
@@ -44,7 +44,11 @@ function todoLiItem() {
     img.alt = "icon-check";
 
     let todo = document.createElement("span");
-    todo.textContent = getTodo(); // receive todo text from user
+    if(todoText === '') {
+      todo.textContent = getTodo(); // receive todo text from user
+    } else {
+        todo.textContent = todoText;
+    }
 
     let deleteIcon = document.createElement("img");
     deleteIcon.className = "icon-cross";
@@ -74,3 +78,18 @@ inputCheckBox.addEventListener("click", () => {
 function saveTodoToLocalStorage() {
     localStorage.setItem("todos", JSON.stringify(todosArray));
 }
+
+// fetch todos from localstorage and display to the DOM
+document.addEventListener("DOMContentLoaded", () => {
+  let todos = [];
+  todos = JSON.parse(localStorage.getItem("todos"));
+
+    let li;
+    todos.forEach((todo, index) => {
+        if(todo.todo){
+            li = todoLiItem(todo.todo);
+            todoContainer.prepend(li);
+        }
+    });
+});
+
