@@ -1,0 +1,237 @@
+/* @import url("https://fonts.google.com/specimen/Josefin+Sans"); */
+
+/* theme colors, fonts */
+:root {
+  --very-dark-blue: hsl(235, 21%, 11%);
+  --very-dark-desaturated-blue: hsl(235, 24%, 19%);
+  --light-grayish-blue: hsl(234, 39%, 85%);
+  --dark-grayish-blue: hsl(234, 11%, 52%);
+  --very-dark-grayish-blue: hsl(233, 14%, 35%);
+  --very-dark-grayish-blue: hsl(237, 14%, 26%);
+
+  /* fonts */
+  --font-size: 18px;
+
+  /* font-style */
+  --font-family: "Josefin Sans";
+}
+
+html[data-theme="light"] {
+  --very-light-gray: hsl(0, 0%, 98%);
+  --very-light-grayish-blue: hsl(236, 33%, 92%);
+  --light-grayish-blue: hsl(233, 11%, 84%);
+  --dark-grayish-blue: hsl(236, 9%, 61%);
+  --very-dark-grayish-blue: hsl(235, 19%, 35%);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--very-dark-blue);
+  color: var(--light-grayish-blue);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-image: url("./images/bg-desktop-dark.jpg");
+  background-repeat: no-repeat;
+  font-size: var(--font-size);
+}
+
+#container {
+  max-width: 500px;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.header h1 {
+  text-transform: uppercase;
+  font-size: 3em;
+  letter-spacing: 10px;
+  color: white;
+}
+
+.header .icon-sun {
+  position: absolute;
+  right: 0;
+}
+
+.header .icon-moon {
+  display: none;
+}
+
+.icon-moon,
+.icon-sun {
+  cursor: pointer;
+}
+
+.todo-input-container {
+  background-color: var(--very-dark-desaturated-blue);
+  padding: 0.7em 2em;
+  border-radius: 5px;
+  display: flex;
+  position: relative;
+}
+
+.todo-input-container #inputField {
+    background-color: inherit;
+    border: none;
+    font-size: var(--font-size);
+    padding: 5px;
+    width: 100%;
+    color: var(--very-light-gray);
+    margin-left: 30px;
+}
+
+#inputField:placeholder-shown {
+    font-size: var(--font-size);
+}
+
+#inputField:active, #inputField:focus-within {
+    border: none;
+    color: white;
+    background-color: var(--very-dark-blue);
+}
+
+/* checkbox */
+.input-checkbox {
+    position: absolute;
+    top: 16px;
+    left: 25px;
+    width: 25px;
+    height: 25px;
+    background-color: transparent;
+    border: 1px solid var(--very-dark-grayish-blue);
+    border-radius: 50%;
+}
+
+.input-checkbox:hover{
+    cursor: pointer;
+    border: 1px solid;
+    border-image: linear-gradient((to right, blue, lightblue, pink) 1);
+}
+
+.inputcheckbox{
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    left: 31px;
+    top: 23px;
+    display: none;
+}
+
+.input{
+    position: absolute;
+    top: 21px;
+    left: 25px;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: 1px solid var(--very-dark-grayish-blue);
+    border-radius: 50%;
+}
+
+.todo {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 27px;
+    margin-left: 5px;
+    display: none;
+}
+
+.input:hover {
+    cursor: pointer;
+    border: 1px solid;
+    border-image: linear-gradient((to right, blue, lightblue, pink) 1);
+}
+
+.todos-container li .icon-cross {
+    padding-right: 20px;
+    display: none;
+}
+
+.todos-container li .icon-cross.active {
+    display: block;
+}
+/* todo container */
+
+.todos-container {
+    background-color: var(--very-dark-desaturated-blue);
+    border-radius: 5px;
+    list-style: none;
+    position: relative;
+}
+
+.todos-container .checkbox {
+    position: absolute;
+    left: 10px;
+}
+
+.todos-container li {
+    height: 60px;
+    border-top: 1px solid var(--very-dark-grayish-blue);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 40px;
+    color: var(--light-grayish-blue);
+    position: relative;
+}
+
+.todos-container li:hover {
+    color: white;
+    cursor: pointer;
+}
+
+/* for checked todos*/
+.todos-container li.completed {
+    text-decoration: line-through;
+}
+
+.todos-container li:first-child {
+    border-top: none;
+}
+
+.todos-container li.footer {
+    font-size: 13px;
+    width: 100%;
+    color: var(--dark-grayish-blue);
+    font-weight: 600;
+}
+
+li.footer ul{
+    display: flex;
+}
+
+/* active filter */
+
+li.footer ul li.active {
+    color: blue;
+}
+
+li.footer ul li:hover, li.footer .clear-btn:hover {
+    color: white;
+    cursor: pointer;
+}
+
+li.footer {
+    padding: 1em;
+}
+
+li.footer ul li{
+    padding: 10px;
+}
+
