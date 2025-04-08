@@ -209,6 +209,7 @@ const filterTodos = (todos, filter) => {
 let filters = document.querySelectorAll("#container > ul > li > ul > li");
 filters.forEach((f) => {
   f.addEventListener("click", (e) => {
+    colorFilterb(f);
     let domTodos = document.querySelectorAll("#container > ul > li.todo-item");
     domTodos.forEach((t) => t.remove());
 
@@ -230,3 +231,30 @@ filters.forEach((f) => {
     });
   });
 });
+
+// color a clicked filter
+const colorFilterb = (filter) => {
+  filters.forEach(f => f.classList.remove("active"));
+
+  filter.classList.add("active");
+}
+
+// clear all todos
+const clearTodos = () => {
+  let clearBtn = document.querySelector(
+    "#container > ul > li.footer > p.clear-btn"
+  );
+  
+  clearBtn.addEventListener("click", () => {
+    localStorage.clear();
+    todosArray.splice(0, todosArray.length);
+    upadteTodoCount(todosArray);
+
+        let domTodos = document.querySelectorAll(
+          "#container > ul > li.todo-item"
+        );
+        domTodos.forEach((t) => t.remove());
+  });
+}
+
+clearTodos();
