@@ -163,6 +163,11 @@ body {
     display: none;
 }
 
+/* show x icon only when the to li is hovered */
+.todos-container li:hover > .icon-cross {
+    display: block;
+}
+
 .todos-container li .icon-cross.active {
     display: block;
 }
