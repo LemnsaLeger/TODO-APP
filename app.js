@@ -71,6 +71,8 @@ inputCheckBox.addEventListener("click", () => {
   if (li) {
     todoContainer.prepend(li);
     deleteTodo(li);
+    markTodoCompleted(li);
+    updateTodoStatusInLocalStorage(li);
   }
 });
 
@@ -79,20 +81,33 @@ function saveTodoToLocalStorage() {
   localStorage.setItem("todos", JSON.stringify(todosArray));
 }
 
-// fetch todos from localstorage and display to the DOM
+// fill the DOM with todos 
 document.addEventListener("DOMContentLoaded", () => {
-  let todos = [];
-  todos = JSON.parse(localStorage.getItem("todos"));
-  todosArray.push(...todos);
+  let todosArray = JSON.parse(localStorage.getItem("todos")) || [];
   let li;
-  todos.forEach((todo, index) => {
+
+  todosArray.forEach((todo, index) => {
     if (todo.todo) {
-      li = todoLiItem(todo.todo);
-      todoContainer.prepend(li);
+      li = todoLiItem(todo.todo); // calling the function that creates li
+      let span = li.querySelector("span");
+      let checkbox = li.querySelector(".input");
+      let check = li.querySelector(".todo");
+      span.className = todo.status; // Set the saved class (status)
+
+      if(span.className === "completed") {
+        check.classList.toggle("active");
+        checkbox.classList.toggle("active");
+      }
+
+      todoContainer.prepend(li); // Prepend to the DOM
+
+      // Call deleteTodo and markTodoCompleted for each li (assuming these functions work as expected)
       deleteTodo(li);
+      markTodoCompleted(li);
     }
   });
 });
+
 
 // function to delete a todo
 const deleteTodo = (todo) => {
@@ -108,3 +123,44 @@ const deleteTodo = (todo) => {
     saveTodoToLocalStorage(); // Update localStorage
   });
 };
+
+
+// this function marks a todo done
+const markTodoCompleted = (todo) => {
+  let checkbox = todo.querySelector(".input");
+  let check = todo.querySelector(".todo");
+  let todoText = todo.querySelector("span");
+
+  // mark todo complete when checkbox is clicked
+  checkbox.addEventListener("click", () => {
+    todoText.classList.toggle("completed");
+    check.classList.toggle("active");
+    checkbox.classList.toggle("active");
+    updateTodoStatusInLocalStorage(todo);
+  });
+
+  // mark todo complete when todo is clicked
+  todo.addEventListener("click", (event) => {
+    if(event.target !== checkbox) {
+        todoText.classList.toggle("completed");
+        check.classList.toggle("active");
+        checkbox.classList.toggle("active");
+        updateTodoStatusInLocalStorage(todo);
+    }
+  });
+}
+
+const updateTodoStatusInLocalStorage = (todo) => {
+    let todoSpan = todo.querySelector("span");
+    todosArray = JSON.parse(localStorage.getItem("todos")) || [];
+
+    let todoFromLS = todosArray.findIndex(t => t.todo === todoSpan.textContent);
+    if(todoFromLS !== -1) {
+         todosArray[todoFromLS].status = todoSpan.classList.contains(
+           "completed"
+         )
+           ? "completed"
+           : "active";
+        saveTodoToLocalStorage();
+    }
+}
