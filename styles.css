@@ -158,6 +158,17 @@ body {
     border-image: linear-gradient((to right, blue, lightblue, pink) 1);
 }
 
+/* show checked box on clicked todo */
+.todo.active {
+    display: block;
+}
+
+.input.active {
+    background-image: linear-gradient(to right, rgb(129, 129, 219), rgb(72, 122, 183));
+    border: 1px solid var(--very-dark-grayish-blue);
+    border-radius: 50%;
+}
+
 .todos-container li .icon-cross {
     padding-right: 20px;
     display: none;
@@ -202,8 +213,9 @@ body {
 }
 
 /* for checked todos*/
-.todos-container li.completed {
+.todos-container li span.completed {
     text-decoration: line-through;
+    opacity: .5;
 }
 
 .todos-container li:first-child {
