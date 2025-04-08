@@ -26,6 +26,7 @@ function getTodo() {
     input = inputField.value.trim();
     const todoObject = new CreateTodoObject(input);
     todosArray.push(todoObject);
+    upadteTodoCount(todosArray); // update the todos count
 
     saveTodoToLocalStorage(todoObject);
     return input;
@@ -73,6 +74,7 @@ inputCheckBox.addEventListener("click", () => {
     deleteTodo(li);
     markTodoCompleted(li);
     updateTodoStatusInLocalStorage(li);
+    upadteTodoCount(todosArray);
   }
 });
 
@@ -120,7 +122,9 @@ const deleteTodo = (todo) => {
     todo.remove(); // remove the todo from dom
     // Remove the todo from the todos array in localStorage
     todosArray.splice(index, 1); // Modify the array in place
+    upadteTodoCount(todosArray); // update todo count
     saveTodoToLocalStorage(); // Update localStorage
+    upadteTodoCount(todosArray);
   });
 };
 
@@ -137,6 +141,7 @@ const markTodoCompleted = (todo) => {
     check.classList.toggle("active");
     checkbox.classList.toggle("active");
     updateTodoStatusInLocalStorage(todo);
+    upadteTodoCount(todosArray);
   });
 
   // mark todo complete when todo is clicked
@@ -146,6 +151,7 @@ const markTodoCompleted = (todo) => {
         check.classList.toggle("active");
         checkbox.classList.toggle("active");
         updateTodoStatusInLocalStorage(todo);
+        upadteTodoCount(todosArray);
     }
   });
 }
@@ -163,4 +169,10 @@ const updateTodoStatusInLocalStorage = (todo) => {
            : "active";
         saveTodoToLocalStorage();
     }
+}
+
+// this function updates todo counts
+const upadteTodoCount = (todos) => {
+    let counter = document.querySelector("#container > ul > li > p.count");
+    counter.textContent = `${todos.length} item(s) left`;
 }
