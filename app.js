@@ -119,6 +119,30 @@ document.addEventListener("DOMContentLoaded", () => {
       upadteTodoCount(todosArray);
     }
   });
+
+  // theme changing logic
+  // Initially hide the moon icon if the theme is dark
+  const htmlElement = document.documentElement;
+  if (htmlElement.getAttribute("data-theme") === "dark") {
+    sunIcon.style.display = "block";
+    moonIcon.style.display = "none";
+  } else {
+    sunIcon.style.display = "block";
+    moonIcon.style.display = "none";
+  }
+
+  // Add click event listener to toggle theme
+  sunIcon.addEventListener("click", function () {
+    htmlElement.setAttribute("data-theme", "light");
+    sunIcon.style.display = "none"; 
+    moonIcon.style.display = "block"; 
+  });
+
+  moonIcon.addEventListener("click", function () {
+    htmlElement.setAttribute("data-theme", "dark");
+    sunIcon.style.display = "block"; 
+    moonIcon.style.display = "none"; 
+  });
 });
 
 // function to delete a todo
@@ -131,9 +155,9 @@ const deleteTodo = (todo) => {
   deleteIcon.addEventListener("click", () => {
     todo.remove(); // remove the todo from dom
     // Remove the todo from the todos array in localStorage
-    todosArray.splice(index, 1); // Modify the array in place
-    upadteTodoCount(todosArray); // update todo count
-    saveTodoToLocalStorage(); // Update localStorage
+    todosArray.splice(index, 1); 
+    upadteTodoCount(todosArray); 
+    saveTodoToLocalStorage(); 
     upadteTodoCount(todosArray);
   });
 };
@@ -165,6 +189,7 @@ const markTodoCompleted = (todo) => {
   });
 };
 
+// no comment haha
 const updateTodoStatusInLocalStorage = (todo) => {
   let todoSpan = todo.querySelector("span");
   todosArray = JSON.parse(localStorage.getItem("todos")) || [];
