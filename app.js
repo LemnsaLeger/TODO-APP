@@ -181,7 +181,8 @@ const updateTodoStatusInLocalStorage = (todo) => {
 // this function updates todo counts
 const upadteTodoCount = (todos) => {
   let counter = document.querySelector("#container > ul > li > p.count");
-  counter.textContent = `${todos.length} item(s) left`;
+  todosArray = todos.filter(todo => todo.status !== "completed");
+  counter.textContent = `${todosArray.length} item(s) left`;
 };
 
 // filter todos
@@ -240,22 +241,29 @@ const colorFilterb = (filter) => {
   filter.classList.add("active");
 }
 
-// clear all todos
+// Clear all completed todos
 const clearTodos = () => {
   let clearBtn = document.querySelector(
     "#container > ul > li.footer > p.clear-btn"
   );
   
   clearBtn.addEventListener("click", () => {
-    localStorage.clear();
-    todosArray.splice(0, todosArray.length);
-    upadteTodoCount(todosArray);
+    let domTodos = document.querySelectorAll("#container > ul > li.todo-item");
+    domTodos.forEach((todo) => {
+      let span = todo.querySelector("span");
+      if (span && span.classList.contains("completed")) { // check if todo span has completed class
+        // Remove the todo from the DOM
+        todo.remove();
+      }
+    });
 
-        let domTodos = document.querySelectorAll(
-          "#container > ul > li.todo-item"
-        );
-        domTodos.forEach((t) => t.remove());
+    // update local storage and todos array
+    todosArray = JSON.parse(localStorage.getItem("todos")) || [];
+    todosArray = todosArray.filter(todo => todo.status !== "completed"); 
+    saveTodoToLocalStorage();
+    upadteTodoCount(todosArray);
   });
 }
+
 
 clearTodos();
