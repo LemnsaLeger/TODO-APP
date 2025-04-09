@@ -116,6 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Call deleteTodo and markTodoCompleted for each li (assuming these functions work as expected)
       deleteTodo(li);
       markTodoCompleted(li);
+      upadteTodoCount(todosArray);
     }
   });
 });
