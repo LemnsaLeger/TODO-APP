@@ -35,6 +35,7 @@ function getTodo() {
 function todoLiItem(todoText = "") {
   let li = document.createElement("li");
   li.className = "todo-item";
+  li.setAttribute("draggable", "true");
   let div = document.createElement("div"); // for checkbox
   div.className = "input checkbox";
 
@@ -66,26 +67,25 @@ function todoLiItem(todoText = "") {
 // add todo to DOM on button click(checkbox)
 inputCheckBox.addEventListener("click", () => {
   let li;
-    let input;
-    input = inputField.value.trim();
-  if(!input) {
+  let input;
+  input = inputField.value.trim();
+  if (!input) {
     return;
-} else {
-  li = todoLiItem();
-   let text = li.querySelector("span").textContent;
-   if (text !== "" || text !== " " || !text) {
-     todoContainer.prepend(li);
+  } else {
+    li = todoLiItem();
+    let text = li.querySelector("span").textContent;
+    if (text !== "" || text !== " " || !text) {
+      todoContainer.prepend(li);
 
-     // clear input field immediately after the user adds todo
-     inputField.value = "";
+      // clear input field immediately after the user adds todo
+      inputField.value = "";
 
-     deleteTodo(li);
-     markTodoCompleted(li);
-     updateTodoStatusInLocalStorage(li);
-     upadteTodoCount(todosArray);
-   }
-}
- 
+      deleteTodo(li);
+      markTodoCompleted(li);
+      updateTodoStatusInLocalStorage(li);
+      upadteTodoCount(todosArray);
+    }
+  }
 });
 
 // save todos in local storage
@@ -118,6 +118,31 @@ document.addEventListener("DOMContentLoaded", () => {
       markTodoCompleted(li);
       upadteTodoCount(todosArray);
     }
+
+    // Implementing a drag and drop functionality
+    const todoList = todoContainer;
+    let draggedItem = null;
+
+    // Set up drag events for each todo item
+    todoList.addEventListener("dragstart", function (event) {
+      draggedItem = event.target; // Store the dragged item
+      event.target.style.opacity = 0.5; // Optional: make the item semi-transparent
+    });
+
+    todoList.addEventListener("dragend", function (event) {
+      event.target.style.opacity = ""; // Reset opacity
+    });
+
+    todoList.addEventListener("dragover", function (event) {
+      event.preventDefault(); // Prevent default to allow drop
+    });
+
+    todoList.addEventListener("drop", function (event) {
+      event.preventDefault(); // Prevent default behavior
+      if (event.target.className === "todo-item") {
+        todoList.insertBefore(draggedItem, event.target); // Insert dragged item before the target
+      }
+    });
   });
 
   // theme changing logic
@@ -134,14 +159,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add click event listener to toggle theme
   sunIcon.addEventListener("click", function () {
     htmlElement.setAttribute("data-theme", "light");
-    sunIcon.style.display = "none"; 
-    moonIcon.style.display = "block"; 
+    sunIcon.style.display = "none";
+    moonIcon.style.display = "block";
   });
 
   moonIcon.addEventListener("click", function () {
     htmlElement.setAttribute("data-theme", "dark");
-    sunIcon.style.display = "block"; 
-    moonIcon.style.display = "none"; 
+    sunIcon.style.display = "block";
+    moonIcon.style.display = "none";
   });
 });
 
@@ -155,9 +180,9 @@ const deleteTodo = (todo) => {
   deleteIcon.addEventListener("click", () => {
     todo.remove(); // remove the todo from dom
     // Remove the todo from the todos array in localStorage
-    todosArray.splice(index, 1); 
-    upadteTodoCount(todosArray); 
-    saveTodoToLocalStorage(); 
+    todosArray.splice(index, 1);
+    upadteTodoCount(todosArray);
+    saveTodoToLocalStorage();
     upadteTodoCount(todosArray);
   });
 };
@@ -206,7 +231,7 @@ const updateTodoStatusInLocalStorage = (todo) => {
 // this function updates todo counts
 const upadteTodoCount = (todos) => {
   let counter = document.querySelector("#container > ul > li > p.count");
-  todosArray = todos.filter(todo => todo.status !== "completed");
+  todosArray = todos.filter((todo) => todo.status !== "completed");
   counter.textContent = `${todosArray.length} item(s) left`;
 };
 
@@ -261,22 +286,23 @@ filters.forEach((f) => {
 
 // color a clicked filter
 const colorFilterb = (filter) => {
-  filters.forEach(f => f.classList.remove("active"));
+  filters.forEach((f) => f.classList.remove("active"));
 
   filter.classList.add("active");
-}
+};
 
 // Clear all completed todos
 const clearTodos = () => {
   let clearBtn = document.querySelector(
     "#container > ul > li.footer > p.clear-btn"
   );
-  
+
   clearBtn.addEventListener("click", () => {
     let domTodos = document.querySelectorAll("#container > ul > li.todo-item");
     domTodos.forEach((todo) => {
       let span = todo.querySelector("span");
-      if (span && span.classList.contains("completed")) { // check if todo span has completed class
+      if (span && span.classList.contains("completed")) {
+        // check if todo span has completed class
         // Remove the todo from the DOM
         todo.remove();
       }
@@ -284,11 +310,10 @@ const clearTodos = () => {
 
     // update local storage and todos array
     todosArray = JSON.parse(localStorage.getItem("todos")) || [];
-    todosArray = todosArray.filter(todo => todo.status !== "completed"); 
+    todosArray = todosArray.filter((todo) => todo.status !== "completed");
     saveTodoToLocalStorage();
     upadteTodoCount(todosArray);
   });
-}
-
+};
 
 clearTodos();
