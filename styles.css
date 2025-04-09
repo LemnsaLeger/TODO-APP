@@ -259,6 +259,13 @@ li.footer ul li{
     color: var(--filter-color);
 }
 
+body p{
+  max-width: 300px;
+  color: var(--text-color);
+  margin: 20px auto;
+  font-size: 13px;
+  text-align: center;
+}
 /* attribution */
       .attribution {
         font-size: 11px;
@@ -267,4 +274,40 @@ li.footer ul li{
       }
       .attribution a {
         color: hsl(228, 45%, 44%);
+      }
+
+      /* screen width 375px */
+      @media (max-width: 375px) {
+        .header h1{
+          font-size: 1.5em;
+        }
+        body{
+          width: 100%;
+          background-position-y: 0;
+        }
+        /* li.footer{
+          position: relative;
+        } */
+
+        #container > ul > li > ul {
+          position: absolute;
+          max-width: 100%;
+          right: 0;
+          left: 0;
+          top: 80px;
+          border-top: none;
+          background-color: var(--very-dark-desaturated-blue);
+          justify-content: center;
+          border-radius: 5px;
+        }
+
+        #container {
+          max-width: 300px;
+          margin: 100px auto;
+        }
+
+        .attribution {
+          max-width: 300px;
+          margin: 50px 10px;
+        }
       }
