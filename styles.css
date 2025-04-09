@@ -259,3 +259,12 @@ li.footer ul li{
     color: var(--filter-color);
 }
 
+/* attribution */
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+        color: var(--text-color);
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
