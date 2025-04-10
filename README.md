@@ -70,7 +70,7 @@ WebbApp that uses external data APIs.
 
 ## Author
 
-- Website - [Add your name here](https://www.your-site.com)
+- Website - [Lemnsa Leger](https://lemnsaleger.github.io/Personal-Website-Homepage/)
 - Frontend Mentor - [@Leger](https://www.frontendmentor.io/profile/leger)
 - Twitter - [@devlemnsa](https://www.twitter.com/@devlemnsa)
 
